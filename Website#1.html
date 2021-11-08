@@ -1,0 +1,506 @@
+<!--Jonathan Harsy, Personal Website Project -->
+<!DOCTYPE html>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!--Set default text styles and style navbar-->
+<style>
+  h1, h2, h3, h4, h5, h6, p, a, header, footer,nav, div, hr {
+    font-family: "Times New Roman", serif;
+  }
+body {
+  margin: 0;
+  font-size: 28px;
+}
+.tabcontent {
+  color: black;
+  display: none;
+  padding: 100px 20px;
+  height: 100%;
+  }
+  #Contact {background-color: white;}
+  #About {background-color: white;}
+  #Donate {background-color: white;}
+  #Gallery {background-color: white;}
+
+.header {
+  background-color: #f1f1f1;
+  padding: 30px;
+  text-align: center;
+}
+
+#navbar {
+  overflow: hidden;
+  background-color: #014421;
+  background-image: linear-gradient(135deg, rgba(60, 179, 10,0.5) 0%,rgba(243, 65, 65, 0.4) 100%), url("https://bloximages.chicago2.vip.townnews.com/missoulian.com/content/tncms/assets/v3/editorial/6/d4/6d4f05d3-2492-50b6-8cb4-27a670981802/563385034056a.image.jpg");
+}
+
+#navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 10px 10px;
+  text-decoration: none;
+  font-size: 20px;
+}
+
+#navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+#navbar a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
+.content , header {
+  padding: 20px;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+.sticky + .content {
+  padding-top: 60px;
+}
+</style>
+<!--End Styles-->
+
+<!--Set Header-->
+<header style = "color: yellow; ">
+  Wildlife everywhere, really, everywhere.
+   <form style="float: right;" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+    <!-- Identify your business so that you can collect the payments. -->
+    <input type="hidden" name="business"
+        value="donations@ligmuh.com">
+
+    <!-- Specify a Donate button. -->
+    <input type="hidden" name="cmd" value="_donations">
+
+    <!-- Specify details about the contribution -->
+    <input type="hidden" name="item_name" value="Friends of the Park">
+    <input type="hidden" name="item_number" value="Fall Cleanup Campaign">
+    <input type="hidden" name="currency_code" value="USD">
+
+    <!-- Display the payment button. -->
+    <input type="image" name="submit"
+    src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif"
+    alt="Donate">
+    <img alt="" width="1" height="1"
+    src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" >
+</form>
+<hr size="4" width="100%" color="tan">
+</header>
+
+<!--Style Header background image-->
+<style>
+  header {
+    background-image: url("https://static.decalgirl.com/assets/designs/large/mossyoak-sg.jpg");");
+  }
+</style>
+
+
+<!--Set "Main Header" -->
+</div>
+ <div class="container" id="co">
+   <canvas id="c"></canvas>
+   <!--insert logo here-->
+  <h1 style = "color: orange;" >W.E.R.E</h1>
+  <aside style = "color: orange;">(slogan here) “We strivin’ for perfection.” – Wu Tang Clan</aside>
+</div>
+
+<!--Style Main Header-->
+<style>
+@import url(https://fonts.googleapis.com/css?family=Calligraffitti);
+
+.container , footer {
+  background-image: linear-gradient(135deg, rgba(60, 179, 10,0.5) 0%,rgba(243, 65, 65, 0.4) 100%), url("https://i.cbc.ca/1.4077579.1492704805!/fileImage/httpImage/image.jpg_gen/derivatives/16x9_780/duck-house.jpg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  background-size: cover;
+}
+
+
+h1 {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  text-align: center;
+  top: 42%;
+  left: 50%;
+  font-weight: normal;
+  font-size: 5em;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+  transform: translate3d(-50%,-50%,0);
+}
+
+aside {
+  position: absolute;
+  margin: 0;
+  padding: 0;
+  color: #fff;
+  text-align: center;
+  top: 80%;
+  left: 50%;
+  font-family: "Calligraffitti";
+  font-weight: normal;
+  font-size: 40px;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+  transform: translate3d(-50%,-50%,0);
+}
+
+@media only screen and (max-width : 768px) {
+
+  h1 {
+    font-size: 3em;
+  }
+}
+</style>
+
+<script>
+(function() {
+    var width, height, largeContainer, canvas, ctx, circles, target, animateHeader = true;
+
+    // Main
+    initHeader();
+    addListeners();
+
+    function initHeader() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        target = {x: 0, y: height};
+      
+        largeContainer = document.getElementById('co');
+        largeContainer.style.height = height+'px';
+
+        canvas = document.getElementById('c');
+        canvas.width = width;
+        canvas.height = height;
+        ctx = canvas.getContext('2d');
+
+        // create particles
+        circles = [];
+        for(var x = 0; x < width*1.0; x++) {
+            var c = new Circle();
+            circles.push(c);
+        }
+        animate();
+    }
+
+    // Event handling
+    function addListeners() {
+        window.addEventListener('scroll', scrollCheck);
+        window.addEventListener('resize', resize);
+    }
+
+    function scrollCheck() {
+        if(document.body.scrollTop > height) animateHeader = false;
+        else animateHeader = true;
+    }
+
+    function resize() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        largeContainer.style.height = height+'px';
+        canvas.width = width;
+        canvas.height = height;
+    }
+
+    function animate() {
+        if(animateHeader) {
+            ctx.clearRect(0,0,width,height);
+            for(var i in circles) {
+                circles[i].draw();
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+
+    // Canvas manipulation
+    function Circle() {
+        var _this = this;
+
+        // constructor
+        (function() {
+            _this.pos = {};
+            init();
+            console.log(_this);
+        })();
+
+        function init() {
+            _this.pos.x = Math.random()*width;
+            _this.pos.y = height+Math.random()*100;
+            _this.alpha = 0.1+Math.random()*0.3;
+            _this.scale = 0.1+Math.random()*0.3;
+            _this.velocity = Math.random();
+        }
+
+        this.draw = function() {
+            if(_this.alpha <= 0) {
+                init();
+            }
+            _this.pos.y -= _this.velocity;
+            _this.alpha -= 0.0005;
+            ctx.beginPath();
+            ctx.arc(_this.pos.x, _this.pos.y, _this.scale*10, 0, 2 * Math.PI, false);
+            ctx.fillStyle = 'rgba(255,255,255,'+ _this.alpha+')';
+            ctx.fill();
+        };
+    }
+
+})();
+</script>
+
+<!--Make the navbar-->
+<div id = "navbar">
+  <button class="content" onclick="openPage('Contact', this, 'tan')">Contact</button>
+  <button class="content" onclick="openPage('About', this, 'tan')" id="defaultOpen">About</button>
+  <button class="content" onclick="openPage('News', this, 'tan')">News</button>
+  <button class="content" onclick="openPage('Gallery', this, 'tan')">Gallery</button>
+  <button class="content" onclick="openPage('Donate', this, 'Orange')">Donate</button>
+  <button class="content" onclick="openPage('Subscribe', this, 'Yellow')">Subscribe</button>
+  <class="topnav">
+  <input style = "float: right;" type="text" placeholder="Search..">
+</div>
+  </div>
+</nav>
+
+<!--Style nav bar-->
+<style>
+/* Add a black background color to the top navigation bar */
+.topnav {
+  top: 50%;
+  position: absolute;
+  overflow: hidden;
+  padding: 20px;
+  background-color: #e9e9e9;
+}
+
+
+/* Style the search box inside the navigation bar */
+.topnav input[type=text] {
+  float: right;
+  padding: 10px;
+  border: none;
+  margin-top: 8px;
+  margin-right: 20px;
+  font-size: 17px;
+}
+</style>
+
+<!--Define Contact Content-->
+<div id="Contact" class="tabcontent">
+  <h2 style="color: orange;">CONTACT</h2>
+  <hr size="4" width="100%" color="gray">
+  <p>For questions and concerns, reach out! </p>
+  <h3>Email</h3>
+  <p>weareWERE@gmail.com<p>
+  <h3>Phone</h3>
+  <p>111-222-3333</p>
+  <h2>  Going to test how much/if the page changes with long lengths of text. So here are some nice poems. </h2>
+  <h2> Two roads diverged in a yellow wood,
+And sorry I could not travel both
+And be one traveler, long I stood
+And looked down one as far as I could
+To where it bent in the undergrowth;
+
+Then took the other, as just as fair,
+And having perhaps the better claim,
+Because it was grassy and wanted wear;
+Though as for that the passing there
+Had worn them really about the same,
+
+And both that morning equally lay
+In leaves no step had trodden black.
+Oh, I kept the first for another day!
+Yet knowing how way leads on to way,
+I doubted if I should ever come back.
+
+I shall be telling this with a sigh
+Somewhere ages and ages hence:
+Two roads diverged in a wood, and I—
+I took the one less traveled by,
+And that has made all the difference.
+
+by:Robert Frost
+</h2>
+
+<p>-This page can essientially be as long as I want it, thanks to a fixed and scrollable option. </p>
+<h2>If I had enough cages to keep all the birds
+I’ve collected over the years then I would have
+to open a shop because there’s only so much room
+in a two-bedroom walk-up for 48 birds,
+not to mention the dancing bears and the frogs,
+or the different varieties of fish, the one
+species of flea, and I almost forgot the proud
+dogs and the lone mule, the profane one
+who entered my life to curse at scribes and pharisees;
+and maybe he’d let the mouse I found
+forever dying at the end of a poem
+ride on his back like
+..cutoff
+By:Tomas </h2>
+<hr size="4" width="100%" color="gray">
+</div>
+
+
+<!--Define the about class-->
+<div id="About" class="tabcontent">
+ <h2 style="color: Orange;">ABOUT</h2>
+ <hr size="4" width="100%" color="gray">
+ <p> </p>
+  <p> Hello! We are WERE, not exactl sure what it means. However, we are dedicated to improving and conserving animal habitat around the local midwest region.If you love bats, ducks, and cigarettes. We would love to have our join the cause!</p>
+  <h3>Mission Statement</h3>
+  <p>"Reason for conservation is to protect wildlife and promote biodiversity. Protecting wildlife and preserving it for future generations also means that the animals we love don’t become a distant memory. And we can maintain a healthy and functional ecosystem."" - Gavin Treefauker, professional vegan<p>
+  <h3> Get Involved </h3>
+  <p> See the contact page to get involved and see what projects are happening in your area!</p>
+  <h3> Meet The Founding Fathers </h3>
+    <p> Cash Money: Made of magic wildflowers and exotic candies</p>
+    <p> Nasty Like JP: Yung GAWD  </p>
+    <p> Jordy Goat: Stick fort extraordinaire, legal thing #2 </p>
+    <P> Bubba: The Elon Mush of WERE, legal thing #1</p>
+    <p> The Great Brandino: Midwest wildlife fanatic and smartBOI</p>
+    <p> Soup: likes juggling and all thigns spaghetti </p>
+    <hr size="4" width="100%" color="gray">
+</div>
+
+<!--Define news tab-->
+<div id="News" class="tabcontent">
+  <h2 style="color: orange;">BAT NAMED BIRD OF THE YEAR?</h2>
+  <hr size="4" width="100%" color="gray">
+  <p>New Zealand has named the bat their “Bird of the Year,” despite the now-controversial fact that bats are not of the avian family.
+Bats are regarded as New Zealand’s only native land mammal, and under threat of extinction — as well as public scrutiny as of late due to its potential link to the initial coronavirus outbreak in 2020.
+
+It’s the first time a non-bird has been honored with the award, angering some birders who claim the mammalian animal stole the election from the rightful Aves class.! </p>
+</div>
+
+<!--Define Gallery class/tab-->
+<div id="Gallery" class="tabcontent">
+ <h2 style="color: orange;">GALLERY</h2>
+ <hr size="4" width="100%" color="gray">
+  <p>See what we have been up to!</p>
+  <img src="https://i.pinimg.com/736x/92/3e/57/923e570c34e29c73b42d0c465aa1a621.jpg" width="550" height="550">
+  <figcaption style="color: tan;"> Build Your Own Box at Home! </figcaption>
+  <hr size="4" width="100%" color="gray">
+</div>
+
+<!--Define the donation class/tab-->
+<!--Just have to set parameters to a working paypal-->
+<div id="Donate" class="tabcontent">
+  <h2 style="color: Orange;">DONATE</h2>
+  <hr size="4" width="100%" color="gray">
+  <p>Money doesnt grow on trees and bat boxes arn't cheap! Help us out!</p>
+  <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+    <!-- Identify your business so that you can collect the payments. -->
+    <input type="hidden" name="business"
+        value="donations@ligmuh.com">
+
+    <!-- Specify a Donate button. -->
+    <input type="hidden" name="cmd" value="_donations">
+
+    <!-- Specify details about the contribution -->
+    <input type="hidden" name="item_name" value="Friends of the Park">
+    <input type="hidden" name="item_number" value="Fall Cleanup Campaign">
+    <input type="hidden" name="currency_code" value="USD">
+
+    <!-- Display the payment button. -->
+    <input type="image" name="submit"
+    src="https://www.northadamscml.michlibrary.org/site-assets/copy_of_images/donate-button.png/@@images/579422f0-c52a-4af5-94c6-a87329020b3d.pngf"
+    alt="Donate">
+    <img alt="" width="1" height="1"
+    src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" >
+</form>
+</div>
+
+<!--Define the subscribe class/tab-->
+<div id="Subscribe" class="tabcontent">
+ <h2 style="color: orange;">SUBSCRIBE</h2>
+ <hr size="4" width="100%" color="gray">
+  <p>Subscribe for monthly newsletters!</p>
+        <label><b>Name</b></label>
+        <input type="text" name="namr" required>
+        <label><b>Email</b></label>
+        <input type="email" name="email" required> 
+        <button type="submit">Subscribe</button>     
+</div>
+
+<!--Function to openPage when clicked on the navbar-->
+<script>
+  function openPage(pageName, elmnt, color) {
+  // Hide all elements with class="tabcontent" by default */
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  // Remove the background color of all tablinks/buttons
+  tablinks = document.getElementsByClassName("tablink");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].style.backgroundColor = "";
+  }
+  // Show the specific tab content
+  document.getElementById(pageName).style.display = "block";
+  // Add the specific color to the button used to open the tab content
+  elmnt.style.backgroundColor = color;
+      }
+// Get the element with id="defaultOpen" and click on it
+   document.getElementById("defaultOpen").click();
+</script>
+
+<!--Function for scrollable content within the navbar-->
+<script>
+window.onscroll = function() {myFunction()};
+
+var navbar = document.getElementById("navbar");
+var sticky = navbar.offsetTop;
+
+function myFunction() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky")
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
+</script>
+
+
+<!--Define footer-->
+<footer>
+      <h5> Follow Us on Your Favorite Platform!</h5>
+      <a href="http://www.twitter.com"><img src="https://pbs.twimg.com/profile_images/500260075953340416/pOULZw-K.png" width="30" height="30"alt="Facebook Logo"></a>
+
+      <a href ="http://www.facebook.com"><img src="http://gvalley.myworshiptimes22.com/wp-content/uploads/sites/25/2015/07/facebook-logo.jpg" width="30" height="30" alt ="Twitter logo"></a>
+
+      <a href ="https://www.youtube.com/watch?v=xN1XLHKiOJc"><img src="https://sc2.elpais.com.uy/files/article_default_content/uploads/2017/12/15/5a33be5d52cac.jpeg" width="30" height="30" alt ="Youtube Logo"></a>
+
+      <a href ="https://www.instagram.com/"><img src="https://www.exchange4media.com/news-photo/1506604505_h5MDcw_excellent-new-instagram-logo-clipart-image.jpg" width="30" height="30" alt ="Instagram logo"></a>
+      <form style="float: right;" action="https://www.paypal.com/cgi-bin/webscr" method="post">
+    <!-- Identify your business so that you can collect the payments. -->
+    <input type="hidden" name="business"
+        value="donations@ligmuh.com">
+
+    <!-- Specify a Donate button. -->
+    <input type="hidden" name="cmd" value="_donations">
+
+    <!-- Specify details about the contribution -->
+    <input type="hidden" name="item_name" value="Friends of the Park">
+    <input type="hidden" name="item_number" value="Fall Cleanup Campaign">
+    <input type="hidden" name="currency_code" value="USD">
+
+    <!-- Display the payment button. -->
+    <input type="image" name="submit" width="100" height="100"
+    src="https://openclipart.org/image/800px/svg_to_png/65107/ribbit6.png"
+    alt="Donate">
+    <img alt="" width="1" height="1"
+    src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" >
+</form>
+      <h6 style= "color: #8b4513;">Made By: Nasty Like JP</h6>
+</footer>
+</html>
